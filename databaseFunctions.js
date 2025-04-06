@@ -24,6 +24,8 @@ async function findItem(search) {
   return await foundItem;
 }
 
+// Add Item
+
 async function addItem(item) {
   await connectDB();
   Item.create(item).then(() => {
@@ -33,4 +35,26 @@ async function addItem(item) {
   return "New Item Added";
 }
 
-module.exports = { findItem, addItem };
+// Update Item
+
+async function updateItem(_id, item) {
+  await connectDB();
+  Item.updateOne({ _id }, item).then(() => {
+    console.log("Item Updated");
+    mongoose.connection.close();
+  });
+  return "Item Updated";
+}
+
+// Remove Item
+
+async function removeItem(_id) {
+  await connectDB();
+  Item.deleteOne({ _id }).then(() => {
+    console.log("Item Removed");
+    mongoose.connection.close();
+  });
+  return "Item Removed";
+}
+
+module.exports = { findItem, addItem, updateItem, removeItem };
